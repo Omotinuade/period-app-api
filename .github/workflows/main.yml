@@ -49,7 +49,7 @@ jobs:
 
     - name: Connect to EC2 instance and deploy
       run: |
-          ssh-keyscan -H 54.157.140.149 >> ~/.ssh/key-air.pem
-          ssh -i ~/.ssh/key-air.pem ec2-user@54.157.140.149 'docker stop periodapp || true'
-          ssh -i ~/.ssh/key-air.pem ec2-user@54.157.140.149 'docker pull jerrywise97/periodapp:latest'
-          ssh -i ~/.ssh/key-air.pem ec2-user@54.157.140.149 'docker run -d --name periodapp -p 8890:8890 jerrywise97/periodapp:latest'
+          ssh-keyscan -H 18.206.186.87 >> ~/.ssh/key-air.pem
+          ssh -i ~/.ssh/key-air.pem ec2-user@18.206.186.87 'docker stop periodapp || true'
+          ssh -i ~/.ssh/key-air.pem ec2-user@18.206.186.87 'docker pull omotinuade/periodapp:latest'
+          ssh -i ~/.ssh/key-air.pem ec2-user@18.206.186.87 'docker run -d --name periodapp -p 8890:8890 omotinuade/periodapp:latest'
