@@ -49,7 +49,7 @@ jobs:
           
     - name: Connect to EC2 instance and deploy
       run: |
-          ssh-keyscan -H 18.206.186.87 >> ~/.ssh/known_hosts
+          ssh-keyscan -H 52.90.202.53 >> ~/.ssh/known_hosts
           ssh -i ~/.ssh/new_age_keypair.pem ec2-user@52.90.202.53 'docker stop periodapp || true'
           ssh -i ~/.ssh/new_age_keypair.pem ec2-user@52.90.202.53 'docker rm -f periodapp || true'
           ssh -i ~/.ssh/new_age_keypair.pem ec2-user@52.90.202.53 'docker pull omotinuade/periodapp:latest'
