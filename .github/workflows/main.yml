@@ -53,4 +53,12 @@ jobs:
           ssh -i ~/.ssh/new_age_keypair.pem ec2-user@18.206.186.87 'docker stop periodapp || true'
           ssh -i ~/.ssh/new_age_keypair.pem ec2-user@18.206.186.87 'docker rm -f periodapp || true'
           ssh -i ~/.ssh/new_age_keypair.pem ec2-user@18.206.186.87 'docker pull omotinuade/periodapp:latest'
-          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@18.206.186.87 'docker run -d --name periodapp -p 8890:8890 omotinuade/periodapp:latest'
+          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@18.206.186.87 'docker run -d \
+          -e secret_db_url="${{ secrets.SECRET_DB_URL}}" \
+          -e secret_db_username="${{ secrets.SECRET_DB_USERNAME}}" \
+          -e secret_db_password="${{ secrets.SECRET_DB_PASSWORD}}" \
+          -e secret_security_jwtExpTime="${{ secrets.SECRET_SECURITY_JWTEXPTIME}}" \
+          -e secret_security_jwtSecretKey="${{ secrets.SECRET_SECURITY_JWTSECRETKEY}}" \
+          --name periodapp \
+          -p 8890:8890 \
+          omotinuade/periodapp:latest'
