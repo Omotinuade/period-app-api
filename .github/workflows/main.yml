@@ -60,5 +60,5 @@ jobs:
           -e secret_security_jwtExpTime="${{ secrets.SECRET_SECURITY_JWTEXPTIME}}" \
           -e secret_security_jwtSecretKey="${{ secrets.SECRET_SECURITY_JWTSECRETKEY}}" \
           --name periodapp \
-          -p 8890:8890 \
+          -p 8891:8891 \
           omotinuade/periodapp:latest'
