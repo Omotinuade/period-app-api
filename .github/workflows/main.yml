@@ -42,7 +42,7 @@ jobs:
     - name: Add EC2 private key to SSH agent
       run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" | ~/.ssh/new_age_keypair.pem
+          echo "${{ secrets.EC2_PRIVATE_KEY }}" | base64 --decode > ~/.ssh/new_age_keypair.pem
           chmod 400 ~/.ssh/new_age_keypair.pem
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/new_age_keypair.pem
