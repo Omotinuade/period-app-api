@@ -22,7 +22,7 @@ jobs:
       
     - name: Build and tag Docker image 
       run: |
-        docker build -t jerrywise97/periodapp .
+        docker build -t omotinuade/periodapp .
      
     - name: Log in to Docker Hub
       run: |
@@ -30,14 +30,14 @@ jobs:
     
     - name: Push Docker image to Docker Hub
       run: |
-        docker push jerrywise97/periodapp:latest
+        docker push omotinuade/periodapp:latest
         
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_S }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_S }}
-          aws-region: YOUR_AWS_REGION
+          aws-region: us-east-1
           
     - name: Add EC2 private key to SSH agent
       run: |
