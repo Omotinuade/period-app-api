@@ -1,30 +1,50 @@
+
 pipeline {
-  agent any
-
-  stages {
-    stage('Build') {
-      steps {
-        sh 'mvn clean package -Dprod'
-      }
+    agent any
+    
+    environment {
+        DOCKER_IMAGE = 'omotinuade/periodapp'
+        DOCKER_USERNAME = 'omotinuade'
+        DOCKER_PASSWORD = 'Omotoyinbo1!'
+        EC2_USER = 'ec2-user'
+        EC2_HOST = '3-85-82-215'
     }
+    
+    stages {
+        stage('Clone') {
+            steps {
+                git branch: 'main',
+                url: 'https://github.com/Omotinuade/period-app-api.git'
 
-    stage('Build Docker Image') {
-      steps {
-        script {
-          docker.withRegistry('https://hub.docker.com/', 'docker-hub-id') {
-            def dockerImage = docker.build('period-app-api:latest', '.')
-            dockerImage.push()
-          }
+            }
         }
-      }
-    }
-
-    stage('Deploy to EC2') {
-      steps {
-        script {
-          sh 'ssh -i ~/Downloads/raheem-jenkins-one-note-keypair.pem ec2-user@ec2-52-90-67-9.compute-1.amazonaws.com "docker-compose down && docker-compose up -d"'
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean package -Dskipstest'
+            }
         }
-      }
+        
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t omotinuade/periodapp .'
+            }
+        }
+        
+        stage('Push to Docker Hub') {
+            steps {
+                sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
+                sh 'docker push ${DOCKER_IMAGE}:latest'
+            }
+        }
+        
+        stage('Deploy to EC2') {
+            steps {
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker stop periodapp || true'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker rm periodapp || true'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker pull ${DOCKER_IMAGE}'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker run -d --name periodapp -p 8890:8890 ${DOCKER_IMAGE}'"
+            }
+        }
     }
-  }
 }
