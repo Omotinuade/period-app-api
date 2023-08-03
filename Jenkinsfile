@@ -19,12 +19,6 @@ pipeline {
             }
         }
         
-        stage('Build') {
-            steps {
-                sh 'mvn clean package -Dskipstest'
-            }
-        }
-        
         stage('Docker Build') {
             steps {
                 sh 'docker build -t omotinuade/periodapp .'
