@@ -49,11 +49,11 @@ jobs:
           
     - name: Connect to EC2 instance and deploy
       run: |
-          ssh-keyscan -H 3.85.82.215 >> ~/.ssh/known_hosts
-          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@3.85.82.215 'docker stop periodapp || true'
-          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@3.85.82.215 'docker rm -f periodapp || true'
-          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@3.85.82.215 'docker pull omotinuade/periodapp:latest'
-          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@3.85.82.215 'docker run -d \
+          ssh-keyscan -H 54.242.133.239 >> ~/.ssh/known_hosts
+          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@54.242.133.239 'docker stop periodapp || true'
+          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@54.242.133.2395 'docker rm -f periodapp || true'
+          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@54.242.133.239 'docker pull omotinuade/periodapp:latest'
+          ssh -i ~/.ssh/new_age_keypair.pem ec2-user@54.242.133.239 'docker run -d \
           -e secret_db_url="${{ secrets.SECRET_DB_URL}}" \
           -e secret_db_username="${{ secrets.SECRET_DB_USERNAME}}" \
           -e secret_db_password="${{ secrets.SECRET_DB_PASSWORD}}" \
