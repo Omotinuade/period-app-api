@@ -38,6 +38,6 @@ pipeline {
                 sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker pull ${DOCKER_IMAGE}'"
                 sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker run -d --name periodapp -p 8890:8890 ${DOCKER_IMAGE}'"
             }
-        }
-    }
+        }
+    }
 }
