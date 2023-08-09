@@ -27,16 +27,12 @@ pipeline {
         
         stage('Configure AWS credentials') {
             steps {
-                withCredentials([
-                    string(credentialsId: "${AWS_CREDENTIALS_ID}", variable: 'AWS_ACCESS_KEY_ID'),
-                    string(credentialsId: "${AWS_CREDENTIALS_ID}", variable: 'AWS_SECRET_ACCESS_KEY')
-                ]) {
                     sh "aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}"
                     sh "aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}"
                 }
-            }
-            
-        }stage('Build and tag Docker image') {
+        }
+        
+        stage('Build and tag Docker image') {
             steps {
                 sh "docker build -t ${DOCKER_IMAGE} ."
             }
