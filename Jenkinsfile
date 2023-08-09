@@ -5,6 +5,7 @@ pipeline {
         DOCKER_USERNAME = credentials('docker_username')
         DOCKER_PASSWORD = credentials('docker_password')
         DOCKER_IMAGE = 'omotinuade/periodapp'
+        DOCKER_CREDENTIALS = credentials('docker')
         BUILD_NUMBER = 'latest'
         EC2_USER = 'ec2-user'
         EC2_HOST = '54.198.95.9'
@@ -26,14 +27,18 @@ pipeline {
         }
        
         stage('Build and tag Docker image') {
-            steps {
-                sh "docker build -t $DOCKER_IMAGE ."
+            steps { 
+                sh "docker build -t ${DOCKER_IMAGE} ."
             }
         }
         
         stage('Log in to Docker Hub') {
             steps {
-                sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
+                withCredentials([
+                    usernamePassword(credentialsId: "${DOCKER_CREDENTIALS}", usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')
+                ]) { 
+                sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+                }
             }
         }
         
