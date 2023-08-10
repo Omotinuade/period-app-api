@@ -2,11 +2,11 @@ pipeline {
     agent any
     
     environment {
-        DOCKER_IMAGE = 'omotinuade/periodapp'
-        DOCKER_USERNAME = 'omotinuade'
-        DOCKER_PASSWORD = 'Omotoyinbo1!'
-        EC2_USER = 'ec2-user'
-        EC2_HOST = '3-85-82-215'
+        registry = "omotinuade/periodapp"
+        registryCredential = 'docker'
+        BUILD_NUMBER = 'latest'
+        dockerImage = ''
+        EC2_HOST = '3.81.107.202'
     }
     
     stages {
@@ -20,7 +20,9 @@ pipeline {
         
         stage('Docker Build') {
             steps {
-                sh "docker build -t ${DOCKER_IMAGE} ."
+                script {
+                dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }   
             }
         }
 
@@ -50,10 +52,10 @@ pipeline {
         
         stage('Deploy to EC2') {
             steps {
-                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker stop periodapp || true'"
-                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker rm periodapp || true'"
-                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker pull ${DOCKER_IMAGE}'"
-                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker run -d --name periodapp -p 8890:8890 ${DOCKER_IMAGE}'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ec2-user@${EC2_HOST} 'docker stop periodapp || true'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ec2-user@${EC2_HOST} 'docker rm periodapp || true'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ec2-user@${EC2_HOST} 'docker pull ${DOCKER_IMAGE}'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ec2-user@${EC2_HOST} 'docker run -d --name periodapp -p 8890:8890 ${DOCKER_IMAGE}'"
             }
         }
     }
