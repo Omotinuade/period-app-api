@@ -3,6 +3,7 @@ pipeline {
     
     environment {
         DOCKER_IMAGE = 'omotinuade/periodapp'
+        BUILD_NUMBER = "latest"
     }
     
     stages {
@@ -16,7 +17,8 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t omotinuade/periodapp .'
+                sh 'ls -la'
+                sh 'docker build -t omotinuade/periodapp: .'
             }
         }
 
