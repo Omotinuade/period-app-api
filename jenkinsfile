@@ -3,10 +3,9 @@ pipeline {
     
     environment {
         DOCKER_IMAGE = 'omotinuade/periodapp'
-        DOCKER_USERNAME = ''
-        DOCKER_PASSWORD = 'O~!'~
-        EC2_USER = 'ec2-user'
-        EC2_HOST = '54-198-168-41'
+        DOCKER_USERNAME = 'omotinuade'
+        DOCKER_PASSWORD = 'Omotoyinbo1!'
+        EC2_HOST = '3.81.107.202'
     }
     
     stages {
@@ -14,7 +13,7 @@ pipeline {
             steps {
                 git branch: 'main',
                 url: 'https://github.com/Omotinuade/period-app-api.git'
-
+                echo "Its the docker image - ${DOCKER_IMAGE}"
             }
         }
         
@@ -39,10 +38,10 @@ pipeline {
         
         stage('Deploy to EC2') {
             steps {
-                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker stop periodapp || true'"
-                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker rm periodapp || true'"
-                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker pull ${DOCKER_IMAGE}'"
-                sh "ssh -i ~/.ssh/new_age_keypair.pem ${EC2_USER}@${EC2_HOST} 'docker run -d --name periodapp -p 8890:8890 ${DOCKER_IMAGE}'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ec2-user@${EC2_HOST} 'docker stop periodapp || true'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ec2-user@${EC2_HOST} 'docker rm periodapp || true'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ec2-user@${EC2_HOST} 'docker pull ${DOCKER_IMAGE}'"
+                sh "ssh -i ~/.ssh/new_age_keypair.pem ec2-user@${EC2_HOST} 'docker run -d --name periodapp -p 8890:8890 ${DOCKER_IMAGE}'"
             }
         }
     }
