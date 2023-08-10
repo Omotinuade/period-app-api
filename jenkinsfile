@@ -2,6 +2,7 @@ pipeline {
     agent any
     
     environment {
+        DOCKER_IMAGE = 'omotinuade/periodapp'
     }
     
     stages {
@@ -12,5 +13,5 @@ pipeline {
 
             }
         }
-}
+    }
 }
