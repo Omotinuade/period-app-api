@@ -6,6 +6,7 @@ phases:
       - mvn clean install
       - echo Logging in to Amazon ECR...
       - aws --version
+      - REPOSITORY_URI = 285537730581.dkr.ecr.us-east-1.amazonaws.com/new-period-registry
       - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
