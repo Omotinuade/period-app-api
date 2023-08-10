@@ -20,13 +20,30 @@ pipeline {
         
         stage('Docker Build') {
             steps {
-                sh 'docker build -t omotinuade/periodapp .'
+                sh "docker build -t ${DOCKER_IMAGE} ."
+            }
+        }
+
+        stage('Docker Test') {
+            steps {
+                echo "Running "
             }
         }
         
-        stage('Push to Docker Hub') {
+        stage('Login to Docker Hub') {
             steps {
                 sh 'docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}'
+            }
+        }
+        
+        stage('Docker Test2') {
+            steps {
+                echo "Running 2"
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
                 sh 'docker push ${DOCKER_IMAGE}:latest'
             }
         }
