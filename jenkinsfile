@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'omotinuade/periodapp'
         BUILD_NUMBER = "latest"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
     
     stages {
@@ -17,8 +18,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'ls -la'
-                sh 'docker build -t omotinuade/periodapp: .'
+                sh 'docker build -t omotinuade/periodapp .'
             }
         }
 
