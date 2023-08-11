@@ -50,15 +50,15 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:Latest 
         docker push $ECR_REGISTRY/$ECR_REPOSITORYS:Latest 
         
- // - name: Download environment variables from S3
-    //   run: |
-     //      aws s3 cp s3://enumv2-env-variables/backend/prod/enumv2-backend-prod.env .
-     //      cat enumv2-backend-prod.env 
+#    - name: Download environment variables from S3
+#      run: |
+#       aws s3 cp s3://enumv2-env-variables/backend/prod/enumv2-backend-prod.env .
+#       cat enumv2-backend-prod.env 
 
-     // - name: Set up environment variables
-     //   run: |
-     //      export $(cat enumv2-backend-prod.env)
+#    - name: Set up environment variables
+#      run: |
+#       export $(cat enumv2-backend-prod.env)
          
-     // - name: Update ECS service
-     //   run: |
-     //    aws ecs update-service --cluster enum-v2-production-server --service enumv2-prod-b --force-new-deployment
+#    - name: Update ECS service
+#      run: |
+#       aws ecs update-service --cluster enum-v2-production-server --service enumv2-prod-b --force-new-deployment
