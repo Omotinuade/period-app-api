@@ -43,12 +43,12 @@ jobs:
        env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: enum-v2-backend
-        ECR_REPOSITORYS: enumv2_nginx
+#         ECR_REPOSITORYS: enumv2_nginx
        run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:Latest .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORYS:Latest -f Docker_nginx .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:Latest 
-        docker push $ECR_REGISTRY/$ECR_REPOSITORYS:Latest 
+#        docker build -t $ECR_REGISTRY/$ECR_REPOSITORYS:Latest -f Docker_nginx .
+#        docker push $ECR_REGISTRY/$ECR_REPOSITORYS:Latest 
         
 #    - name: Download environment variables from S3
 #      run: |
