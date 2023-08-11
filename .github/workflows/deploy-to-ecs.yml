@@ -42,7 +42,7 @@ jobs:
      - name: Build, tag, and push image to Amazon ECR
        env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: enum-v2-backend
+        ECR_REPOSITORY: period-app-ecr
 #         ECR_REPOSITORYS: enumv2_nginx
        run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:Latest .
