@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         registry = "omotinuade/periodapp"
-        registryCredential = 'docker'
+        registryCredential = credentials('docker')
         BUILD_NUMBER = 'latest'
         dockerImage = ''
         EC2_HOST = '3.81.107.202'
